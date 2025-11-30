@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'><text y='1.2em' font-size='96'>⚫️</text></svg>">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+              integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+              crossorigin="anonymous">
+    {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js">
+
+                integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
+                crossorigin="anonymous"></script>
+    {% endblock %}
+</head>
+<body>
+{% if app.request.get('_route') not in ['login', 'app_register'] %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">FormManage</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {# Formation Dropdown #}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle {% if app.request.attributes.get('_route') starts with 'app_formation' %}active{% endif %}"
+                   href="#" id="navbarDropdownFormation" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Formation
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownFormation">
+                    <li><a class="dropdown-item" href="{{ path('app_formation_index') }}">Liste Formation</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_formation_new') }}">Ajouter Formation</a></li>
+                </ul>
+            </li>
+
+            {# Apprenant Link #}
+            <li class="nav-item">
+                <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_apprenant' %}active{% endif %}"
+                   href="{{ path('app_apprenant_index') }}">Apprenant</a>
+            </li>
+            
+
+            {# Session Dropdown #}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle {% if app.request.attributes.get('_route') starts with 'app_session' %}active{% endif %}"
+                   href="#" id="navbarDropdownSession" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Session
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownSession">
+                    <li><a class="dropdown-item" href="{{ path('app_session_index') }}">Liste Session</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_session_new') }}">Ajouter Session</a></li>
+                </ul>
+            </li>
+            {# Report Dropdown #}
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle {% if app.request.attributes.get('_route') starts with 'app_report' %}active{% endif %}"
+       href="#" id="navbarDropdownReport" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Report
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdownReport">
+       <a class="dropdown-item" href="{{ path('report_by_formation') }}">Par Formation</a>
+
+    </ul>
+</li>
+        </ul>
+         {# Logout #}
+           <li class="nav-item">
+    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+</li>
+
+        
+    </div>
+</nav>
+
+<div class="container mt-4">
+    {% endif %} {% block body %}{% endblock %}
+</div>
+</body>
+</html>

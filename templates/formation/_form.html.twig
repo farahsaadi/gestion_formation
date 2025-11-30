@@ -1,0 +1,22 @@
+{{ form_start(form) }}
+
+<div class="mb-3">
+    <label for="formation_titre" class="form-label">{{ form_label(form.titre) }}</label>
+    {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+</div>
+
+<div class="mb-3">
+    <label for="formation_description" class="form-label">{{ form_label(form.description) }}</label>
+    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+</div>
+
+<div class="mb-3">
+    <label for="formation_duree" class="form-label">{{ form_label(form.duree) }}</label>
+    {{ form_widget(form.duree, {'attr': {'class': 'form-control', 'min': 1}}) }}
+</div>
+
+<div class="mt-3">
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+</div>
+
+{{ form_end(form) }}

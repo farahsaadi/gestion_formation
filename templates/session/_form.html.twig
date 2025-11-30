@@ -1,0 +1,37 @@
+{{ form_start(form) }}
+
+<div class="mb-3">
+    <label for="session_dateDebut" class="form-label">{{ form_label(form.dateDebut) }}</label>
+    {{ form_widget(form.dateDebut, {'attr': {'class': 'form-control'}}) }}
+</div>
+
+<div class="mb-3">
+    <label for="session_dateFin" class="form-label">{{ form_label(form.dateFin) }}</label>
+    {{ form_widget(form.dateFin, {'attr': {'class': 'form-control'}}) }}
+</div>
+
+<div class="mb-3">
+    <label for="session_lieu" class="form-label">{{ form_label(form.lieu) }}</label>
+    {{ form_widget(form.lieu, {'attr': {'class': 'form-control'}}) }}
+</div>
+
+<div class="mb-3">
+    <label for="session_formation" class="form-label">{{ form_label(form.formation) }}</label>
+    {{ form_widget(form.formation, {'attr': {'class': 'form-select'}}) }}
+</div>
+
+<div class="mb-3">
+    <label for="session_apprenants" class="form-label">{{ form_label(form.apprenants) }}</label>
+    {# Permet de créer une session même si aucun apprenant n'est sélectionné #}
+    {{ form_widget(form.apprenants, {
+        'attr': {'class': 'form-select'},
+        'multiple': true,
+        'required': false
+    }) }}
+</div>
+
+<div class="mt-3">
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+</div>
+
+{{ form_end(form) }}

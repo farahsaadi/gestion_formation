@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Session index{% endblock %}
+
+{% block body %}
+<h1>Session index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date Debut</th>
+            <th>Date Fin</th>
+            <th>Lieu</th>
+            <th>Formation</th>
+            <th>Apprenants</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for session in sessions %}
+            <tr>
+                <td>{{ session.dateDebut ? session.dateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ session.dateFin ? session.dateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ session.lieu }}</td>
+                <td>{{ session.formation.titre }}</td>
+                <td>
+                    {% if session.apprenants|length > 0 %}
+                        {% for apprenant in session.apprenants %}
+                            {{ apprenant.nom ~ ' ' ~ apprenant.prenom }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        Aucun
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('app_session_show', {'id': session.id}) }}">show</a>
+                    <a href="{{ path('app_session_edit', {'id': session.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">No records found</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('app_session_new') }}" class="btn btn-primary">Create new</a>
+{% endblock %}

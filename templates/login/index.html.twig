@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h1 class="text-center mb-4">Connexion</h1>
+
+                    {# Afficher les erreurs de connexion #}
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+
+                    {# Afficher les messages flash (succès de réinitialisation, etc.) #}
+                    {% for message in app.flashes('notice') %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+
+                    <form action="{{ path('login') }}" method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Nom d'utilisateur:</label>
+                            <input type="text" 
+                                   id="username" 
+                                   name="_username" 
+                                   value="{{ last_username }}" 
+                                   class="form-control"
+                                   required
+                                   autofocus/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Mot de passe:</label>
+                            <input type="password" 
+                                   id="password" 
+                                   name="_password" 
+                                   class="form-control"
+                                   required/>
+                        </div>
+
+                        <div class="mb-3 text-end">
+                            <a href="{{ path('reset_password') }}" class="text-decoration-none small">
+                                Mot de passe oublié ?
+                            </a>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Se connecter
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <p class="mb-0">
+                            Pas encore de compte ? 
+                            <a href="{{ path('app_register') }}" class="text-decoration-none fw-bold">
+                                Créer un compte
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistiques Apprenants{% endblock %}
+
+{% block body %}
+<h2 class="text-center mt-4 mb-4">📊 Statistiques des apprenants par formation</h2>
+
+{% if stats is empty %}
+    <div class="alert alert-warning text-center">Aucune donnée trouvée.</div>
+{% else %}
+    <div class="container">
+        <canvas id="chartApprenants" height="120"></canvas>
+    </div>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% if stats is not empty %}
+<script>
+    const labels = [
+        {% for item in stats %}
+            "{{ item.formation }}",
+        {% endfor %}
+    ];
+
+    const data = [
+        {% for item in stats %}
+            {{ item.total }},
+        {% endfor %}
+    ];
+
+    // Génération automatique de couleurs pastel
+    const backgroundColors = labels.map(() => {
+        return `hsla(${Math.random() * 360}, 70%, 70%, 0.8)`;
+    });
+
+    new Chart(document.getElementById('chartApprenants'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Nombre d'apprenants",
+                data: data,
+                backgroundColor: backgroundColors,
+                borderColor: "rgba(0,0,0,0.3)",
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    labels: {
+                        font: { size: 14 }
+                    }
+                },
+                title: {
+                    display: true,
+                    text: "Répartition des apprenants par formation",
+                    font: { size: 20 }
+                }
+            },
+            animation: {
+                duration: 1500,
+                easing: "easeOutBounce"
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
+                }
+            }
+        }
+    });
+</script>
+{% endif %}
+
+{% endblock %}

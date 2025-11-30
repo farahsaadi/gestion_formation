@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Most Popular Sessions{% endblock %}
+
+{% block body %}
+<h1>Sessions les plus peuplées</h1>
+<table class="table table-striped">
+<tr>
+    <th>Formation</th>
+    <th>Nombre d'apprenants</th>
+</tr>
+{% for session in sessions %}
+<tr>
+    <td>{{ session.formationTitle }}</td>
+    <td>{{ session.nbApprenants }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
